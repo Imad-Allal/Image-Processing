@@ -34,7 +34,7 @@ img_gauss = gaussian_noise(image)
 image_SP = salt_pepper_noise(image)
 cv.imwrite('new_pictures/speckle.jpeg', image_SP)
 
-# Concatenate les images horizentallement
+# Concatener les images horizentallement
 Hori = np.concatenate((image, img_gauss, image_SP), axis=1)
 cv.imshow('Originale, Bruit Gaussien et Bruit Sel et Poivre', Hori)
 
