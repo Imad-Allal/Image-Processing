@@ -11,7 +11,6 @@ MASK = np.array([
     [2, 4, 6, 4, 2],
     [1, 2, 3, 2, 1]], np.float32) 
 
-print(MASK)
 
 img = cv.imread('cameraman.tif')
 
@@ -27,7 +26,6 @@ img_smooth = ls.smoothing(img_gauss)
 
 # Lissage en utilisant le masque
 img_mask = ls.smoothing_mask(img_gauss, MASK)
-
 
 Hori = np.concatenate((image, img_gauss, img_smooth, img_mask), axis=1)
 

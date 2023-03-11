@@ -2,8 +2,8 @@ import numpy as np
 import cv2 as cv
 
 # Lissage de l'image
-def smoothing(image):
-    kernel = np.ones((5, 5), np.float32) / 25
+def smoothing(image, t = 5):
+    kernel = np.ones((t, t), np.float32) / (t*t)
     img_smooth = cv.filter2D(image, -1, kernel)
     cv.imwrite('new_pictures/img_smooth.jpeg', img_smooth)
     return img_smooth
