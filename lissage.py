@@ -1,5 +1,6 @@
 import numpy as np
 import cv2 as cv
+#from bruit import gaussian_noise
 
 
 MASK = np.array([
@@ -9,6 +10,7 @@ MASK = np.array([
     [2, 4, 6, 4, 2],
     [1, 2, 3, 2, 1]], np.float32) 
 
+print(MASK)
 
 img = cv.imread('cameraman.tif')
 
@@ -17,24 +19,31 @@ image = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 print(image.shape)
 
 # Generate Gaussian noise
-gauss = np.random.normal(0, 0.01, image.size)
-gauss = gauss.reshape(image.shape).astype('uint8')
-img_noisy = cv.add(image, gauss)
+#img_gauss = gaussian_noise(image)
+
+gauss = np.random.normal(0, 0.3, image.size)
+gauss = gauss.reshape(image.shape[0],image.shape[1],image.shape[2]).astype('uint8')
+
+# Add the Gaussian noise to the image
+img_gauss = cv.add(image,gauss)
+cv.imwrite('new_pictures/gauss.jpeg', img_gauss)
 
 # Lissage de l'image
 kernel = np.ones((5, 5), np.float32) / 25
-img_smooth = cv.filter2D(img_noisy, -1, kernel)
+img_smooth = cv.filter2D(img_gauss, -1, kernel)
+cv.imwrite('new_pictures/img_smooth.jpeg', img_smooth)
+
 
 # Lissage en utilisant le masque
-img_mask = cv.filter2D(img_noisy, -1, (MASK / 81))
+img_mask = cv.filter2D(img_gauss, -1, (MASK / 81))
+cv.imwrite('new_pictures/img_mask.jpeg', img_mask)
 
-Hori = np.concatenate((image, img_noisy, img_smooth, img_mask), axis=1)
+Hori = np.concatenate((image, img_gauss, img_smooth, img_mask), axis=1)
 cv.imshow('Originale, Bruitee, Lissage et Lissage masque', Hori)
 
-diff = img_mask - img_noisy
-# print(f'Filtre de lissage avec masque: {img_mask}')
-# print(f'Filtre de lissage moyenneur{img_noisy}')
-# print(f'Difference {diff}')
-cv.imshow('Difference', diff)
+diff = img_mask - img_smooth
+cv.imwrite('new_pictures/difference.jpeg', diff)
+
+cv.imshow('Difference des filtres', diff)
 cv.waitKey(0)
 #cv.destroyAllWindows()

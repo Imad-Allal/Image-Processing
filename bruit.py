@@ -7,6 +7,7 @@ img = cv.imread('cameraman.tif')
 image = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
 print(image.shape)
+
 # Generate Gaussian noise
 def gaussian_noise(image):
     gauss = np.random.normal(0, 0.3, image.size)
@@ -32,7 +33,7 @@ def salt_pepper_noise(image):
 
 img_gauss = gaussian_noise(image)
 image_SP = salt_pepper_noise(image)
-cv.imwrite('new_pictures/speckle.jpeg', image_SP)
+cv.imwrite('new_pictures/salt_pepper.jpeg', image_SP)
 
 # Concatener les images horizentallement
 Hori = np.concatenate((image, img_gauss, image_SP), axis=1)
