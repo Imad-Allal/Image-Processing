@@ -21,7 +21,7 @@ print(image.shape)
 # Generate Gaussian noise
 #img_gauss = gaussian_noise(image)
 
-gauss = np.random.normal(0, 0.3, image.size)
+gauss = np.random.normal(0, 0.5, image.size)
 gauss = gauss.reshape(image.shape[0],image.shape[1],image.shape[2]).astype('uint8')
 
 # Add the Gaussian noise to the image
@@ -39,11 +39,12 @@ img_mask = cv.filter2D(img_gauss, -1, (MASK / 81))
 cv.imwrite('new_pictures/img_mask.jpeg', img_mask)
 
 Hori = np.concatenate((image, img_gauss, img_smooth, img_mask), axis=1)
-cv.imshow('Originale, Bruitee, Lissage et Lissage masque', Hori)
 
 diff = img_mask - img_smooth
 cv.imwrite('new_pictures/difference.jpeg', diff)
 
 cv.imshow('Difference des filtres', diff)
+cv.imshow('Originale, Bruitee, Lissage et Lissage masque', Hori)
+
 cv.waitKey(0)
 #cv.destroyAllWindows()
