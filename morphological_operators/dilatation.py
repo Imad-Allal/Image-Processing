@@ -1,7 +1,6 @@
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
-import os
 
 img = cv.imread("images/text.png", cv.IMREAD_GRAYSCALE)
 
@@ -97,7 +96,7 @@ plt.axis('off')
 plt.show()
 
 
-# Erosion avec l'élément structurant en forme de ligne
+#Erosion avec l'élément structurant en forme de ligne
 erosion_line_3 = cv.erode(img, kernel_line_3, iterations=1)
 erosion_line_5 = cv.erode(img, kernel_line_5, iterations=1)
 erosion_line_7 = cv.erode(img, kernel_line_7, iterations=1)
@@ -117,7 +116,7 @@ plt.title('Erosion ligne: 7x7')
 plt.axis('off')
 plt.show()
 
-# Erosion avec l'élément structurant en forme de carré
+#Erosion avec l'élément structurant en forme de carré
 erosion_square_3 = cv.erode(img, kernel_square_3, iterations=1)
 erosion_square_5 = cv.erode(img, kernel_square_5, iterations=1)
 erosion_square_7 = cv.erode(img, kernel_square_7, iterations=1)
@@ -175,12 +174,12 @@ else:
     print("L'érosion suivie de la dilatation ne restaure pas l'image d'origine.")
 
 
-# Appliquer l'ouverture avec différents éléments structurants
+#Appliquer l'ouverture avec différents éléments structurants
 opening_line = cv.morphologyEx(img, cv.MORPH_OPEN, kernel_line_3)
 opening_square = cv.morphologyEx(img, cv.MORPH_OPEN, kernel_square_3)
 opening_circle = cv.morphologyEx(img, cv.MORPH_OPEN, kernel_circle_3)
 
-# Afficher les résultats de l'ouverture
+#Afficher les résultats de l'ouverture
 plt.figure(figsize=(10, 4))
 plt.subplot(131)
 plt.imshow(opening_line, cmap='gray')
@@ -196,7 +195,7 @@ plt.title('Ouverture (cercle)')
 plt.axis('off')
 plt.show()
 
-# Appliquer la fermeture avec différents éléments structurants
+#Appliquer la fermeture avec différents éléments structurants
 closing_line = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel_line_3)
 closing_sqaure = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel_square_3)
 closing_circle = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel_circle_3)
@@ -216,13 +215,13 @@ plt.title('Fermeture (cercle)')
 plt.axis('off')
 plt.show()
 
-# Appliquer l'ouverture multiple
+#Appliquer l'ouverture multiple
 multiple_opening = cv.morphologyEx(img, cv.MORPH_OPEN, kernel_square_3, iterations=3)
 
-# Appliquer la fermeture multiple
+#Appliquer la fermeture multiple
 multiple_closing = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel_square_3, iterations=3)
 
-# Vérifier l'idempotence de l'ouverture et de la fermeture
+#Vérifier l'idempotence de l'ouverture et de la fermeture
 if np.array_equal(multiple_opening, opening_square) and np.array_equal(multiple_closing, closing_sqaure):
     print("L'ouverture et la fermeture sont idempotentes.")
 else:
